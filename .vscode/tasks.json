@@ -1,0 +1,70 @@
+{
+  "tasks": [
+    {
+      "label": "Build Libraries",
+      "command": "./ci/build_libs.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "label": "Build Blink",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/Blink"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "label": "Build NewProject",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/NewProject"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "label": "Build",
+      "dependsOn": [
+        "Build Blink",
+        "Build NewProject"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Clean Blink",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/Blink"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "label": "Clean NewProject",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/NewProject"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "label": "Clean",
+      "dependsOn": [
+        "Clean Blink",
+        "Clean NewProject"
+      ],
+      "problemMatcher": [],
+    }
+  ],
+  "version": "2.0.0"
+}
