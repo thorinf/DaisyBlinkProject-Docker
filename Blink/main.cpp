@@ -1,6 +1,13 @@
+/** Daisy Blink Example
+ *
+ *  This example blinks the Daisy Seed's LED
+ *  once per second, as explained in the
+ *  C++ Getting Started guide for the Daisy.
+*/
 #include "daisy_seed.h"
 
-daisy::DaisySeed hardware;
+using namespace daisy;
+DaisySeed hardware;
 
 int main()
 {
@@ -12,6 +19,6 @@ int main()
     {
         hardware.SetLed(led_state);
         led_state = !led_state;
-        daisy::System::Delay(500);
+        hardware.DelayMs(500);
     }
 }

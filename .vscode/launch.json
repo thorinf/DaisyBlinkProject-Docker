@@ -19,7 +19,7 @@
         "reset init",
         "gdb_breakpoint_override hard"
       ],
-      "preLaunchTask": "Build Blink",
+      "preLaunchTask": "Build",
       "preRestartCommands": [
         "load",
         "enable breakpoint",
