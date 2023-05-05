@@ -7,18 +7,18 @@
 #include "daisy_seed.h"
 
 using namespace daisy;
+
 DaisySeed hardware;
 
 int main()
 {
     hardware.Init();
 
-    bool led_state = false;
-
     while (true)
     {
-        hardware.SetLed(led_state);
-        led_state = !led_state;
+        hardware.SetLed(true);
+        hardware.DelayMs(500);
+        hardware.SetLed(false);
         hardware.DelayMs(500);
     }
 }
