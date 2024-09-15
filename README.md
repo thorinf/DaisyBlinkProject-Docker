@@ -18,6 +18,51 @@ git submodule update --init
 
 Alternatively, you can avoid using git, and building libraries if you download the latest zip compiled zip file in the releases.
 
+## Setup
+
+### Dev Containers
+
+As this repository is intended for use with [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) you will need the following things installed:
+
+* [WSL, if using Windows](https://docs.docker.com/desktop/wsl/)
+* Docker
+* Visual Studio Code
+* Dev Containers Extention
+
+This guide won't extensively cover the setup of these steps, but there are plent of guides available online.
+For those using Windows and macOS, the [Docker Desktop](https://www.docker.com/products/docker-desktop/) application can make installation very easy.
+For Linux distros [installing via `apt`](https://docs.docker.com/engine/install/ubuntu/) may be preffered. 
+
+If this is your first time working with Dev Containers, then it's a good idea to check you can open a project in a container before proceeding.
+
+### Windows Subsystem for Linux (WSL)
+
+If using Docker via WSL you will need to [connect the USB device to WSL](https://learn.microsoft.com/en-gb/windows/wsl/connect-usb#attach-a-usb-device.).
+Once WSL has access to the device you can subsequently access it within the Docker container.
+
+Following the instuctions for installing USBIPD in the link above. Once completed, proceed to the first step by opening PowerShell in _administrator_ mode and entering the following command:
+
+```powershell
+usbipd list
+```
+
+The output ought to look similar to the table below, but likely with more devices. Make note of the `BUSID` values for the `DFU in FS Mode` device.
+
+| **BUSID** | **VID:PID** | **Device**         | **State**   |
+|-----------|-------------|--------------------|-------------|
+| 1-3       | ...         | DFU in FS Mode     | ...         |
+| ...       | ...         | ...                | ...         |
+
+Using the `BUSID` values, enter the following command:
+
+```powershell
+usbipd bind --busid 1-3
+usbipd attach --busid 1-3 --wsl --auto-attach
+```
+
+Without `auto-attach` the device will attach once which will allow you to use DFU. However, once the device is reconnected you will need to execute the command again.
+If `auto-attach` is used, the command will allow to PowerShell to attach the device to WSL again so long as the terminal stays open.
+
 ## Contents
 
 Includes:

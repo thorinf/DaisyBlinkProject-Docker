@@ -1,0 +1,27 @@
+{
+    "name": "Daisy Development Container",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": "../."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "marus25.cortex-debug",
+                "mcu-debug.debug-tracker-vscode"
+            ],
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        }
+    },
+    "runArgs": [
+        "--privileged", 
+        "--device=/dev/bus/usb" 
+    ],
+    "postCreateCommand": "sudo service udev restart", 
+    "mounts": [
+        "source=/dev,target=/dev,type=bind"
+    ]
+}
