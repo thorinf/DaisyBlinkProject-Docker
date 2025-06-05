@@ -17,7 +17,8 @@
         }
     },
     "runArgs": [
-        "--privileged"
+        "--privileged",
+        "--network=host"
     ],
     "mounts": [
         "source=/dev/bus/usb,target=/dev/bus/usb,type=bind"

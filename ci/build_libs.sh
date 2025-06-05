@@ -1,42 +1,21 @@
-#!/usr/bin/env bash
-set -euo pipefail
+START_DIR=$PWD
+LIBDAISY_DIR=$PWD/libs/libDaisy
+DAISYSP_DIR=$PWD/libs/DaisySP
 
-PROJECT_ROOT="$PWD"
-LIBDAISY_DIR="$PROJECT_ROOT/libs/libDaisy"
-DAISYSP_DIR="$PROJECT_ROOT/libs/DaisySP"
+echo "building libDaisy . . ."
+cd "$LIBDAISY_DIR" ; make -s clean ; make -j -s
+if [ $? -ne 0 ]
+then
+    echo "Failed to compile libDaisy"
+    exit 1
+fi
+echo "done."
 
-function ensure_dir_exists {
-    local dirpath="$1"
-    if [ ! -d "$dirpath" ]; then
-        echo "ERROR: Directory not found: $dirpath"
-        echo "       Make sure you’ve run 'git submodule update --init --recursive'."
-        exit 1
-    fi
-}
-
-ensure_dir_exists "$LIBDAISY_DIR"
-ensure_dir_exists "$DAISYSP_DIR"
-
-build_lib() {
-    local dir="$1"
-    local name
-    name=$(basename "$dir")
-    echo "building $name (path: $dir) …"
-    (
-        cd "$dir"
-        # Only run “make clean” if the Makefile actually defines a clean target
-        if grep -qE '^clean:' Makefile 2>/dev/null; then
-            make -s clean
-        fi
-        if ! make -j -s; then
-            echo "Failed to compile $name."
-            exit 1
-        fi
-    )
-    echo "$name: done."
-}
-
-build_lib "$LIBDAISY_DIR"
-build_lib "$DAISYSP_DIR"
-
-exit 0
+echo "building DaisySP . . ."
+cd "$DAISYSP_DIR" ; make -s clean ; make -j -s
+if [ $? -ne 0 ]
+then
+    echo "Failed to compile DaisySP"
+    exit 1
+fi
+echo "done."
